@@ -1,0 +1,2954 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEKNOLUVAS - Landing Page Responsiva</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset e Configurações Globais */
+        :root {
+            --color-primary: #00529B; /* azul bic */
+            --color-primary-dark: #003F7A;
+            --color-secondary: #3b82f6; /* azul */
+            --color-text-primary: #1f2937; /* cinza escuro */
+            --color-text-secondary: #4b5563; /* cinza médio */
+            --color-background-light: #f3f4f6; /* cinza claro */
+            --color-white: #ffffff;
+            --color-error: #dc2626; /* vermelho escuro para erros */
+            --font-family-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family-sans);
+            background-color: var(--color-background-light);
+            color: var(--color-text-primary);
+            line-height: 1.6;
+        }
+
+        /* Utilitários */
+        .container {
+            width: 100%;
+            max-width: 1140px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .section-padding {
+            padding-top: 5rem;
+            padding-bottom: 5rem;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-bottom: 3rem;
+        }
+        
+        .section-title .highlight, .subsection-title .highlight {
+             color: var(--color-primary);
+        }
+        
+        .subsection-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        
+        .related-products {
+            margin-top: 4rem;
+            padding: 3rem 2rem;
+            border-radius: 0.75rem;
+        }
+        
+        .related-products-bg-1 { background-color: #f9fafb; }
+        .related-products-bg-2 { background-color: #eff6ff; }
+        .related-products-bg-3 { background-color: #f0fdf4; }
+        .related-products-bg-4 { background-color: #fffbeb; }
+
+        .gradient-text {
+            color: var(--color-primary);
+        }
+
+        .btn {
+            display: inline-block;
+            font-weight: 700;
+            padding: 0.75rem 2rem;
+            border-radius: 9999px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 0.875rem;
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+
+        .btn-primary {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background-color: var(--color-primary-dark);
+            transform: scale(1.05);
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--color-primary);
+            border: 2px solid var(--color-primary);
+        }
+        
+        .btn-secondary:hover:not(:disabled) {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .btn-neutral {
+            background-color: var(--color-text-secondary);
+            color: var(--color-white);
+        }
+
+        .btn-neutral:hover:not(:disabled) {
+            background-color: var(--color-text-primary);
+            transform: scale(1.05);
+        }
+        
+        /* Animação de Rolagem */
+        .scroll-animate {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            will-change: opacity, transform;
+        }
+
+        .scroll-animate.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+        
+        /* Tooltip for C.A. button */
+        .ca-button {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .ca-button .icon-info {
+            width: 1rem;
+            height: 1rem;
+            opacity: 0.7;
+        }
+
+        [data-tooltip]::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--color-text-primary);
+            color: var(--color-white);
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            white-space: normal;
+            width: 250px;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none;
+            z-index: 10;
+            line-height: 1.4;
+        }
+        
+        [data-tooltip]:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Toast Notification */
+        .toast-notification {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background-color: #1f2937; /* cinza escuro */
+            color: #f9fafb; /* cinza bem claro */
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            z-index: 1001;
+            opacity: 0;
+            transform: translateY(20px);
+            visibility: hidden;
+            transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s;
+            border-left: 4px solid #10b981; /* Verde esmeralda */
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            transform: translateY(0);
+            visibility: visible;
+        }
+        
+        .toast-notification .toast-icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: #10b981; /* Verde esmeralda */
+        }
+
+        .toast-notification .toast-message {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Estilos do Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        header nav.container {
+            display: flex;
+            align-items: center;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .nav-menu-wrapper {
+            display: flex;
+            align-items: center;
+            margin-left: auto;
+            gap: 1rem;
+        }
+
+        .nav-links {
+            display: none; /* Oculto em telas pequenas */
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            position: relative;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            padding-bottom: 0.25rem;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            transform: scaleX(0);
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--color-primary);
+            transform-origin: bottom right;
+            transition: transform 0.25s ease-out;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-text-primary);
+        }
+        
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        
+        .header-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; /* Reduced gap */
+        }
+
+        .cart-toggle, .menu-toggle {
+            position: relative;
+            display: block;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 9999px;
+            transition: background-color 0.2s ease-in-out;
+        }
+
+        .cart-toggle:hover, .menu-toggle:hover {
+            background-color: rgba(0,0,0,0.05);
+        }
+        
+        .cart-toggle .icon, .menu-toggle .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: var(--color-text-secondary);
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border-radius: 50%;
+            width: 1.25rem;
+            height: 1.25rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: scale(0);
+            transition: transform 0.2s ease;
+        }
+        
+        .cart-badge.visible {
+            transform: scale(1);
+        }
+
+        @keyframes cart-shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-3px, 0, 0); }
+            40%, 60% { transform: translate3d(3px, 0, 0); }
+        }
+        .cart-shake {
+            animation: cart-shake 0.7s cubic-bezier(.36,.07,.19,.97) both;
+        }
+
+        /* Menu Mobile Animado */
+        .mobile-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background-color: var(--color-white);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            padding: 1rem 1.5rem;
+            border-top: 1px solid #e5e7eb;
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+            visibility: hidden;
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+        }
+
+        .mobile-menu.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+            visibility: visible;
+        }
+        
+        .mobile-menu a {
+            display: block;
+            text-align: center;
+            padding: 0.75rem 0;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            border-radius: 0.375rem;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        
+        .mobile-menu a:hover {
+            background-color: #e5e7eb;
+            color: var(--color-text-primary);
+        }
+
+        /* Estilos do Hero */
+        .hero-section {
+            background-color: var(--color-white);
+            min-height: calc(100vh - 80px); /* Adjust based on header height */
+            display: flex;
+            align-items: center;
+        }
+        
+        .hero-content {
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .hero-text {
+            text-align: center;
+        }
+        
+        .hero-text h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-text p {
+            font-size: 1.125rem;
+            color: var(--color-text-secondary);
+            max-width: 42rem;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            transition: transform 0.5s ease;
+        }
+
+        .hero-image img:hover {
+             transform: scale(1.05);
+        }
+
+        /* Keyframes for the scroll animation */
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Logo Carousel Section */
+        .logo-carousel-section {
+            background-color: var(--color-white);
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        .logo-carousel {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent 100%);
+        }
+
+        .logo-carousel-track {
+            display: flex;
+            width: calc(200px * 14); /* (logo-slide width) * (number of logos * 2) */
+            animation: scroll 35s linear infinite;
+        }
+
+        .logo-carousel:hover .logo-carousel-track {
+            animation-play-state: paused;
+        }
+
+        .logo-slide {
+            flex-shrink: 0;
+            width: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 1rem;
+        }
+
+        .logo-slide img {
+            max-width: 120px;
+            height: auto;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: filter 0.3s ease, opacity 0.3s ease;
+        }
+        
+        .logo-slide:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        /* Estilos das Seções de Features (Sobre, FeatureOne, FeatureTwo) */
+        .feature-section {
+            background-color: var(--color-white);
+        }
+        
+        .feature-section.alt-bg {
+             background-color: var(--color-background-light);
+        }
+
+        .feature-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3rem;
+        }
+        
+        .feature-image, .feature-text {
+            width: 100%;
+        }
+
+        .feature-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .feature-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-text p {
+            color: var(--color-text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.75;
+        }
+        
+        .feature-list {
+            list-style: none;
+            margin-top: 1.5rem;
+            display: grid;
+            gap: 1rem;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: var(--color-text-secondary);
+        }
+
+        .feature-list .icon {
+            width: 1.25rem;
+            height: 1.25rem;
+            color: var(--color-primary);
+            flex-shrink: 0;
+            margin-top: 0.125rem; /* Ajuste vertical */
+        }
+
+
+        /* Estilos da Seção de Produtos */
+        .products-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .product-card {
+            background-color: var(--color-white);
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 1; /* For filtering */
+        }
+
+        .product-card.hidden {
+            transform: scale(0.9);
+            opacity: 0;
+            display: none;
+        }
+
+        .product-card:hover {
+            transform: translateY(-0.5rem);
+        }
+        
+        .product-card img {
+            width: 100%;
+            height: 12rem;
+            object-fit: cover;
+        }
+        
+        .product-card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .product-card-content h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-card-content p {
+            color: var(--color-text-secondary);
+            flex-grow: 1;
+            margin-bottom: 1rem;
+        }
+        
+        .product-card-content .price {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        .product-card-actions {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .product-card-actions .btn {
+            text-align: center;
+        }
+        
+        /* Interactive Product Section */
+        .product-interactive-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .product-carousel-wrapper {
+            position: relative;
+        }
+        
+        .product-carousel {
+            overflow: hidden;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+        }
+
+        .product-carousel-track {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+        }
+
+        .product-carousel-slide {
+            flex: 0 0 100%;
+            min-width: 100%;
+        }
+
+        .product-carousel-slide img {
+            width: 100%;
+            display: block;
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+        }
+        
+        .carousel-nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 2.5rem;
+            height: 2.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: background-color 0.2s, transform 0.2s;
+        }
+        .carousel-nav-button:hover {
+            background-color: white;
+            transform: translateY(-50%) scale(1.1);
+        }
+        .carousel-nav-button.prev { left: 1rem; }
+        .carousel-nav-button.next { right: 1rem; }
+        .carousel-nav-button .icon { width: 1.5rem; height: 1.5rem; color: var(--color-text-primary); }
+
+        .color-swatches {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .color-swatch {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s;
+            padding: 2px;
+        }
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+        
+        .color-swatch.active {
+            border-color: var(--color-primary);
+        }
+        
+        .color-swatch-inner {
+             width: 100%;
+             height: 100%;
+             border-radius: 50%;
+             box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+        
+        .product-interactive-details h3 {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+        }
+        
+        .product-interactive-details p {
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+        }
+        
+        /* --- START: Perspective Carousel Styles --- */
+        #new-carousel {
+            overflow: hidden;
+            background-color: var(--color-background-light);
+        }
+        .perspective-carousel-wrapper {
+            position: relative;
+            width: 100%;
+            height: 500px; /* Adjusted height for landscape */
+            perspective: 2000px; /* Increased perspective */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 4rem;
+        }
+
+        .perspective-carousel {
+            position: absolute;
+            width: 800px; /* Increased width for landscape */
+            height: 450px; /* Adjusted height */
+            transform-style: preserve-3d;
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        .carousel-slide {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--color-white);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+            cursor: pointer;
+            display: flex;
+        }
+        
+        .slide-image-wrapper {
+            flex: 0 0 60%;
+            height: 100%;
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            -webkit-user-drag: none;
+            user-select: none;
+        }
+
+        .slide-text-wrapper {
+            flex: 1;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .slide-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 1.5rem;
+            color: var(--color-text-primary);
+        }
+        
+        .slide-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .slide-actions .btn {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            font-size: 0.875rem;
+        }
+
+        /* Classes for slide positions */
+        .slide-active {
+            transform: translateX(0) translateZ(0) rotateY(0);
+            z-index: 10;
+            opacity: 1;
+            cursor: default;
+        }
+        .slide-prev {
+            transform: translateX(-55%) translateZ(-350px) rotateY(45deg);
+            z-index: 5;
+            opacity: 0.7;
+        }
+        .slide-next {
+            transform: translateX(55%) translateZ(-350px) rotateY(-45deg);
+            z-index: 5;
+            opacity: 0.7;
+        }
+        .slide-hidden {
+            transform: translateX(0) translateZ(-700px) rotateY(0);
+            z-index: 1;
+            opacity: 0;
+        }
+        
+        .perspective-carousel-nav {
+            position: absolute;
+            top: 50%;
+            z-index: 20;
+            transform: translateY(-50%);
+            background: var(--color-white);
+            border: none;
+            border-radius: 50%;
+            width: 3rem;
+            height: 3rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .perspective-carousel-nav:hover {
+            transform: translateY(-50%) scale(1.1);
+            background-color: #f0f0f0;
+        }
+        .perspective-carousel-nav.prev {
+            left: -1.5rem;
+        }
+        .perspective-carousel-nav.next {
+            right: -1.5rem;
+        }
+        .perspective-carousel-nav .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: var(--color-text-primary);
+        }
+        
+        @media (max-width: 900px) {
+            .perspective-carousel { width: 90%; height: auto; aspect-ratio: 4 / 5; }
+            .carousel-slide { flex-direction: column; }
+            .slide-image-wrapper { flex: 0 0 60%; }
+            .slide-text-wrapper { padding: 1.5rem; }
+            .slide-title { font-size: 1.25rem; margin-bottom: 1rem; }
+            .slide-prev { transform: translateX(-50%) translateZ(-180px) rotateY(35deg); }
+            .slide-next { transform: translateX(50%) translateZ(-180px) rotateY(-35deg); }
+        }
+        
+        @media (max-width: 640px) {
+            .perspective-carousel-nav.prev { left: 0rem; }
+            .perspective-carousel-nav.next { right: 0rem; }
+        }
+        /* --- END: Perspective Carousel Styles --- */
+        
+        /* Catalog Filter Styles */
+        .filters-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        .filter-btn {
+            background-color: var(--color-white);
+            color: var(--color-text-secondary);
+            border: 1px solid #d1d5db;
+            padding: 0.6rem 1.5rem;
+            font-weight: 600;
+        }
+        .filter-btn:hover {
+            background-color: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        .filter-btn.active {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border-color: var(--color-primary);
+        }
+        
+        /* Estilos do Drawer (Orçamento) */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 998;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s;
+        }
+        
+        .drawer-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background-color: var(--color-white);
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
+            z-index: 999;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .drawer.active {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .drawer-header h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .drawer-close-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.25rem;
+        }
+        
+        .drawer-close-button .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: var(--color-text-secondary);
+        }
+        
+        .drawer-body {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+
+        /* Estilos do Orçamento */
+        .cart-empty-message {
+            text-align: center;
+            color: var(--color-text-secondary);
+            padding-top: 4rem;
+        }
+
+        .cart-items {
+            list-style: none;
+        }
+        
+        .cart-item {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 0.375rem;
+        }
+        
+        .cart-item-details {
+            flex-grow: 1;
+        }
+        
+        .cart-item-details h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .cart-item-details .price {
+            color: var(--color-text-secondary);
+            font-size: 0.875rem;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .quantity-btn {
+            background-color: #e5e7eb;
+            border: none;
+            border-radius: 50%;
+            width: 1.75rem;
+            height: 1.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .quantity-btn:hover {
+            background-color: #d1d5db;
+        }
+        
+        .cart-item-subtotal {
+            font-weight: 700;
+        }
+
+        .cart-footer {
+            padding: 1.5rem;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .budget-observations textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            margin-top: 1rem;
+        }
+
+        #guest-info-form .form-group {
+            margin-bottom: 0.75rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.375rem;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--color-primary);
+            box-shadow: 0 0 0 2px rgba(0, 82, 155, 0.2);
+        }
+
+        .form-group input.invalid {
+            border-color: var(--color-error);
+            box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.2);
+        }
+
+        .form-error-message {
+            color: var(--color-error);
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 0.25rem;
+            min-height: 1.2em; /* Reserve space to prevent layout shift */
+        }
+
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.125rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cart-checkout-button {
+            width: 100%;
+            padding: 1rem;
+            font-size: 1rem;
+        }
+        
+        /* Estilo para a Animação "Fly-to-Cart" */
+        .fly-to-cart-clone {
+            position: fixed;
+            z-index: 1000;
+            border-radius: 0.5rem;
+            transition: all 0.8s cubic-bezier(0.5, 0, 1, 0.5);
+            pointer-events: none;
+            object-fit: cover;
+        }
+
+        /* Estilos da Seção de Testemunhos */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background-color: var(--color-white);
+            padding: 2.5rem 2rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e5e7eb;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .testimonial-card .quote-icon {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 3rem;
+            height: 3rem;
+            color: var(--color-primary);
+            opacity: 0.1;
+        }
+
+        .testimonial-text {
+            font-size: 1rem;
+            color: var(--color-text-secondary);
+            line-height: 1.75;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: auto;
+        }
+
+        .author-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-info .author-name {
+            font-weight: 700;
+            color: var(--color-text-primary);
+            display: block;
+        }
+
+        .author-info .author-title {
+            font-size: 0.875rem;
+            color: var(--color-text-secondary);
+        }
+
+        /* Estilos do Footer */
+        footer {
+            background-color: #000000;
+            color: #d1d5db; /* Lighter gray text */
+            padding-top: 5rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        .footer-column .logo {
+            display: inline-block;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .footer-column > p {
+            color: #9ca3af;
+            line-height: 1.7;
+            max-width: 320px;
+        }
+
+        .footer-column h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--color-white);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li:not(:last-child) {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            transition: color 0.3s ease, padding-left 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--color-primary);
+            padding-left: 0.5rem;
+        }
+
+        .newsletter-form {
+            display: flex;
+            margin-top: 1.5rem;
+        }
+
+        .newsletter-form input[type="email"] {
+            flex-grow: 1;
+            min-width: 0;
+            padding: 0.75rem 1rem;
+            border: 1px solid #4b5563;
+            background-color: #374151;
+            color: var(--color-white);
+            border-radius: 0.375rem 0 0 0.375rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .newsletter-form input[type="email"]:focus {
+            border-color: var(--color-primary);
+        }
+
+        .newsletter-form button {
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border: none;
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            cursor: pointer;
+            border-radius: 0 0.375rem 0.375rem 0;
+            transition: background-color 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .newsletter-form button:hover {
+            background-color: var(--color-primary-dark);
+        }
+
+        .footer-column .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer-column .social-links a {
+            color: var(--color-white);
+            opacity: 0.8;
+            transition: color 0.3s ease, transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .footer-column .social-links a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+        
+        .footer-column .social-links a[aria-label="Instagram"]:hover {
+            color: #E4405F; /* Instagram Pink */
+        }
+        .footer-column .social-links a[aria-label="Facebook"]:hover {
+            color: #1877F2; /* Facebook Blue */
+        }
+        .footer-column .social-links a[aria-label="WhatsApp"]:hover {
+            color: #25D366; /* WhatsApp Green */
+        }
+
+        .footer-column .social-links .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            fill: currentColor;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #374151;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            text-align: center;
+        }
+
+        .footer-bottom p {
+            font-size: 0.875rem;
+            color: #9ca3af;
+            margin: 0;
+        }
+
+        /* Estilos da Pesquisa Rápida */
+        .search-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(17, 24, 39, 0.7); /* Equivalent to bg-gray-900/70 */
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s;
+            display: flex;
+            justify-content: center;
+            padding-top: 10vh;
+        }
+
+        .search-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .search-modal {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--color-white);
+            border-radius: 0.75rem;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+            display: flex;
+            flex-direction: column;
+            height: -moz-fit-content;
+            height: fit-content;
+            max-height: 70vh;
+            transform: scale(0.95) translateY(-10px);
+            transition: transform 0.3s ease;
+        }
+
+        .search-overlay.active .search-modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .search-header {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .search-input-wrapper {
+            flex-grow: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input-wrapper .icon {
+            position: absolute;
+            left: 0.5rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            color: var(--color-text-secondary);
+            pointer-events: none;
+        }
+
+        #search-input {
+            width: 100%;
+            font-size: 1rem;
+            padding: 0.75rem 0.75rem 0.75rem 2.25rem;
+            border: none;
+            outline: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        .search-close-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            margin-left: 0.5rem;
+            border-radius: 9999px;
+            transition: background-color 0.2s;
+        }
+        .search-close-button:hover {
+            background-color: #f3f4f6;
+        }
+        .search-close-button .icon {
+            width: 1.5rem;
+            height: 1.5rem;
+            color: var(--color-text-secondary);
+        }
+
+        .search-results-wrapper {
+            overflow-y: auto;
+            padding: 0.5rem;
+        }
+
+        #search-results-list {
+            list-style: none;
+        }
+
+        .search-result-item a {
+            display: block;
+            padding: 0.75rem 1rem;
+            text-decoration: none;
+            color: var(--color-text-primary);
+            border-radius: 0.375rem;
+            transition: background-color 0.2s;
+        }
+
+        .search-result-item a:hover,
+        .search-result-item a:focus {
+            background-color: var(--color-background-light);
+            color: var(--color-primary);
+            outline: none;
+        }
+
+        .search-result-item .title {
+            font-weight: 600;
+        }
+
+        .search-result-item .context {
+            font-size: 0.8rem;
+            color: var(--color-text-secondary);
+            margin-top: 0.125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .search-no-results {
+            padding: 2rem 1rem;
+            text-align: center;
+            color: var(--color-text-secondary);
+        }
+        
+        .search-highlight {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 0 0 3px var(--color-primary);
+            transform: scale(1.01);
+            border-radius: 0.75rem; /* Match card radius */
+        }
+
+        /* Media Queries para Responsividade */
+        @media (min-width: 768px) {
+            /* Header */
+            .nav-links {
+                display: flex;
+            }
+            .menu-toggle {
+                display: none;
+            }
+
+            /* Hero */
+            .hero-content {
+                flex-direction: row;
+                gap: 3rem;
+            }
+            .hero-text {
+                text-align: left;
+                width: 50%;
+            }
+            .hero-image {
+                width: 50%;
+            }
+            .hero-text h1 {
+                font-size: 3.75rem;
+            }
+            .hero-text p {
+                margin-left: 0;
+                margin-right: 0;
+            }
+            
+            /* Features */
+            .feature-content {
+                 flex-direction: row;
+            }
+            .feature-content.reverse {
+                flex-direction: row-reverse;
+            }
+            .feature-image, .feature-text {
+                width: 50%;
+            }
+            .feature-list {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem 2rem; /* espaçamento de linha e coluna */
+            }
+            
+            /* Produtos */
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            /* Produto Interativo */
+             .product-interactive-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 3rem;
+            }
+
+            /* Testemunhos */
+            .testimonials-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            /* Perspective Carousel */
+            .perspective-carousel-nav.prev {
+                left: calc(50% - 470px);
+            }
+            .perspective-carousel-nav.next {
+                right: calc(50% - 470px);
+            }
+
+            /* Footer */
+             .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 4rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            /* Produtos */
+            .products-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            /* Testemunhos */
+            .testimonials-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            /* Perspective Carousel */
+            .perspective-carousel-nav.prev {
+                left: calc(50% - 450px);
+            }
+            .perspective-carousel-nav.next {
+                right: calc(50% - 450px);
+            }
+
+            /* Footer */
+            .footer-grid {
+                grid-template-columns: 3fr 2fr 3fr;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    
+    <!-- ============================================= -->
+    <!--                    HEADER                     -->
+    <!-- ============================================= -->
+    <header>
+        <nav class="container">
+            <a href="#home" class="logo gradient-text">TEKNOLUVAS</a>
+            
+            <div class="nav-menu-wrapper">
+                <!-- Links para Desktop -->
+                <div class="nav-links">
+                    <a href="#home">Início</a>
+                    <a href="#catalogo">Catálogo</a>
+                    <a href="#testimonials">Testemunhos</a>
+                </div>
+
+                <div class="header-controls">
+                    <!-- Botão de Pesquisa -->
+                    <button id="search-toggle-button" class="cart-toggle" aria-label="Abrir pesquisa" aria-controls="search-overlay">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                        </svg>
+                    </button>
+                    <!-- Botão do Orçamento -->
+                    <button id="cart-button" class="cart-toggle" aria-label="Abrir orçamento" aria-controls="cart-drawer">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                        <span id="cart-badge" class="cart-badge">0</span>
+                    </button>
+
+                    <!-- Botão do Menu Mobile -->
+                    <button id="menu-button" class="menu-toggle" aria-label="Abrir menu" aria-controls="mobile-menu" aria-expanded="false">
+                        <svg id="menu-open-icon" class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                        <svg id="menu-close-icon" class="icon" style="display: none;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="#home">Início</a>
+            <a href="#catalogo">Catálogo</a>
+            <a href="#testimonials">Testemunhos</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- ============================================= -->
+        <!--                  HERO SECTION                 -->
+        <!-- ============================================= -->
+        <section id="home" class="hero-section section-padding">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-text scroll-animate">
+                        <h1>Criando <span class="gradient-text">Experiências Digitais</span></h1>
+                        <p>Construímos aplicações web bonitas, responsivas e de alto desempenho que impulsionam o crescimento e encantam os usuários.</p>
+                        <a href="#catalogo" class="btn btn-primary">Explore Nosso Catálogo</a>
+                    </div>
+                    <div class="hero-image scroll-animate">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?q=80&w=2070&auto=format&fit=crop" alt="Espaço de trabalho digital com dispositivos">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!--              FEATURE SECTION 1                -->
+        <!-- ============================================= -->
+        <section id="solucoes" class="feature-section section-padding">
+            <div class="container">
+                <h2 class="section-title text-center scroll-animate">Nossas <span class="highlight">Soluções</span></h2>
+                <p class="text-center scroll-animate" style="max-width: 800px; margin: -2rem auto 4rem; color: var(--color-text-secondary);">
+                    Oferecemos uma gama completa de soluções digitais para impulsionar o seu negócio. Desde sistemas corporativos robustos e plataformas de e-commerce vibrantes, até aplicações web interativas e inteligência de dados avançada, nosso objetivo é transformar suas ideias em realidades digitais de alto impacto. Explore abaixo nossas principais áreas de atuação.
+                </p>
+                <div class="feature-content scroll-animate">
+                    <div class="feature-image">
+                        <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2084&auto=format&fit=crop" alt="Equipe colaborando em um escritório moderno">
+                    </div>
+                    <div class="feature-text">
+                        <h3>Soluções Corporativas Personalizadas</h3>
+                        <p>Desenvolvemos sistemas robustos e escaláveis que se integram perfeitamente aos fluxos de trabalho existentes da sua empresa. Nossas soluções corporativas otimizam processos, aumentam a produtividade e fornecem insights valiosos através de painéis de dados intuitivos.</p>
+                        <ul class="feature-list">
+                            <li><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Automação de Processos</span></li>
+                            <li><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Integração de Sistemas</span></li>
+                            <li><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Segurança Avançada</span></li>
+                            <li><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Relatórios Customizados</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!--                 FEATURE SECTION 2             -->
+        <!-- ============================================= -->
+        <section id="ecommerce" class="feature-section alt-bg section-padding">
+            <div class="container">
+                <div class="feature-content reverse scroll-animate">
+                    <div class="feature-image">
+                        <img src="https://images.unsplash.com/photo-1556740758-90de374c12ad?q=80&w=2070&auto=format&fit=crop" alt="Pessoa usando um aplicativo de e-commerce em um smartphone">
+                    </div>
+                    <div class="feature-text">
+                        <h3>Plataformas de E-commerce Vibrantes</h3>
+                        <p>Transformamos sua visão de varejo em uma loja online cativante e de alta conversão. Focamos em uma experiência de usuário impecável, desde a navegação intuitiva até um processo de checkout seguro e simplificado.</p>
+                        <ul class="feature-list">
+                            <li><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Checkout Otimizado</span></li>
+                            <li><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Design 100% Responsivo</span></li>
+                            <li><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Gestão de Inventário</span></li>
+                            <li><svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg><span>Marketing Integrado</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- ============================================= -->
+        <!--        NEW: PRODUCT CATALOG SECTION           -->
+        <!-- ============================================= -->
+        <section id="catalogo" class="section-padding alt-bg">
+            <div class="container">
+                <h2 class="section-title text-center scroll-animate">Nosso <span class="highlight">Catálogo</span></h2>
+                <div class="filters-container scroll-animate">
+                    <button class="btn filter-btn active" data-filter="all">Todos</button>
+                    <button class="btn filter-btn" data-filter="corporate">Corporativo</button>
+                    <button class="btn filter-btn" data-filter="ecommerce">E-commerce</button>
+                    <button class="btn filter-btn" data-filter="seguranca">Equip. de Segurança</button>
+                </div>
+                <div class="products-grid" id="product-catalog-grid">
+                    <!-- CORPORATE PRODUCTS -->
+                    <div class="product-card scroll-animate" data-category="corporate">
+                        <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop" alt="Intranet Corporativa Inteligente">
+                        <div class="product-card-content">
+                            <h3>Intranet Corporativa Inteligente</h3>
+                            <p>Conecte sua equipe, centralize documentos e automatize comunicados com um portal seguro.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="1" data-product-name="Intranet Corporativa Inteligente" data-product-image="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card scroll-animate" data-category="corporate">
+                        <img src="https://images.unsplash.com/photo-1587825140708-df8769a5b8de?q=80&w=2070&auto=format&fit=crop" alt="Sistema de Gestão (ERP) na Nuvem">
+                        <div class="product-card-content">
+                            <h3>Sistema de Gestão (ERP) na Nuvem</h3>
+                            <p>Unifique finanças, estoque e operações com um ERP flexível e acessível de qualquer lugar.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="2" data-product-name="Sistema de Gestão (ERP) na Nuvem" data-product-image="https://images.unsplash.com/photo-1587825140708-df8769a5b8de?q=80&w=2070&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card scroll-animate" data-category="corporate">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop" alt="Plataforma de Business Intelligence (BI)">
+                        <div class="product-card-content">
+                            <h3>Plataforma de Business Intelligence (BI)</h3>
+                            <p>Transforme dados em dashboards interativos para decisões estratégicas mais rápidas.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="3" data-product-name="Plataforma de BI" data-product-image="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card scroll-animate" data-category="corporate">
+                        <img src="https://images.unsplash.com/photo-1677756119517-756a188d2278?q=80&w=1974&auto=format&fit=crop" alt="Automação de Processos (RPA)">
+                        <div class="product-card-content">
+                            <h3>Automação de Processos (RPA)</h3>
+                            <p>Elimine tarefas repetitivas com robôs de software que otimizam fluxos de trabalho.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="4" data-product-name="Automação de Processos (RPA)" data-product-image="https://images.unsplash.com/photo-1677756119517-756a188d2278?q=80&w=1974&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ECOMMERCE PRODUCTS -->
+                    <div class="product-card scroll-animate" data-category="ecommerce">
+                        <img src="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?q=80&w=2070&auto=format&fit=crop" alt="Loja Virtual Premium">
+                        <div class="product-card-content">
+                            <h3>Loja Virtual Premium</h3>
+                            <p>Uma experiência de compra otimizada para impulsionar suas vendas online.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="5" data-product-name="Loja Virtual Premium" data-product-image="https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?q=80&w=2070&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card scroll-animate" data-category="ecommerce">
+                        <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=2070&auto=format&fit=crop" alt="Marketplace Solution">
+                        <div class="product-card-content">
+                            <h3>Marketplace Solution</h3>
+                            <p>Crie seu shopping virtual com múltiplos vendedores e fontes de receita.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="6" data-product-name="Marketplace Solution" data-product-image="https://images.unsplash.com/photo-1559136555-9303baea8ebd?q=80&w=2070&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card scroll-animate" data-category="ecommerce">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop" alt="Sistema de PDV e Estoque">
+                        <div class="product-card-content">
+                            <h3>Sistema de PDV e Estoque</h3>
+                            <p>Sincronize suas vendas físicas e online com um inventário unificado.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="7" data-product-name="Sistema de PDV e Estoque" data-product-image="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card scroll-animate" data-category="ecommerce">
+                        <img src="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070&auto=format&fit=crop" alt="App de Compras Mobile">
+                        <div class="product-card-content">
+                            <h3>App de Compras Mobile</h3>
+                            <p>Leve sua loja para o bolso dos seus clientes com um aplicativo nativo.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="8" data-product-name="App de Compras Mobile" data-product-image="https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?q=80&w=2070&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- SEGURANCA PRODUCTS -->
+                    <div class="product-card scroll-animate" data-category="seguranca">
+                        <img src="https://images.unsplash.com/photo-1581889856532-6273c8703433?q=80&w=1974&auto=format&fit=crop" alt="Capacete de Segurança">
+                        <div class="product-card-content">
+                            <h3>Capacete de Segurança</h3>
+                            <p>Proteção essencial para a cabeça em ambientes de trabalho com risco de impacto.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="19" data-product-name="Capacete de Segurança" data-product-image="https://images.unsplash.com/photo-1581889856532-6273c8703433?q=80&w=1974&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card scroll-animate" data-category="seguranca">
+                        <img src="https://images.unsplash.com/photo-1601443697969-9a49372049d0?q=80&w=1964&auto=format&fit=crop" alt="Luvas de Proteção">
+                        <div class="product-card-content">
+                            <h3>Luvas de Proteção</h3>
+                            <p>Diversos modelos para proteção contra riscos mecânicos, químicos e térmicos.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="20" data-product-name="Luvas de Proteção" data-product-image="https://images.unsplash.com/photo-1601443697969-9a49372049d0?q=80&w=1964&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="product-card scroll-animate" data-category="seguranca">
+                        <img src="https://images.unsplash.com/photo-1634551351185-1d6a6d074558?q=80&w=1974&auto=format&fit=crop" alt="Botas de Segurança">
+                        <div class="product-card-content">
+                            <h3>Botas de Segurança</h3>
+                            <p>Calçados robustos com biqueira de aço ou composite, solado antiderrapante.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="21" data-product-name="Botas de Segurança" data-product-image="https://images.unsplash.com/photo-1634551351185-1d6a6d074558?q=80&w=1974&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-card scroll-animate" data-category="seguranca">
+                        <img src="https://images.unsplash.com/photo-1614728263944-12a1c028a1c7?q=80&w=1974&auto=format&fit=crop" alt="Óculos de Proteção">
+                        <div class="product-card-content">
+                            <h3>Óculos de Proteção</h3>
+                            <p>Proteção visual contra partículas, respingos e radiação, com lentes antiembaçantes.</p>
+                            <div class="product-card-actions">
+                                <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                    <span>Consultar C.A.</span>
+                                    <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                </a>
+                                <button class="btn btn-primary add-to-cart-btn" data-product-id="22" data-product-name="Óculos de Proteção" data-product-image="https://images.unsplash.com/photo-1614728263944-12a1c028a1c7?q=80&w=1974&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!--        NEW 3D PERSPECTIVE CAROUSEL            -->
+        <!-- ============================================= -->
+        <section id="new-carousel" class="feature-section section-padding">
+            <div class="container">
+                <h2 class="section-title text-center scroll-animate">Nossos Equipamentos <span class="highlight">de Destaque</span></h2>
+                <div class="perspective-carousel-wrapper scroll-animate">
+                    <div class="perspective-carousel">
+                        <!-- Slide 1 -->
+                        <div class="carousel-slide" data-index="0">
+                            <div class="slide-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1581889856532-6273c8703433?q=80&w=1974&auto=format&fit=crop" alt="Capacete de Segurança">
+                            </div>
+                            <div class="slide-text-wrapper">
+                                <h4 class="slide-title">Capacete de Segurança</h4>
+                                <div class="slide-actions">
+                                     <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                        <span>Consultar C.A.</span>
+                                        <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                    </a>
+                                    <button class="btn btn-primary add-to-cart-btn" data-product-id="19" data-product-name="Capacete de Segurança" data-product-image="https://images.unsplash.com/photo-1581889856532-6273c8703433?q=80&w=1974&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 2 -->
+                         <div class="carousel-slide" data-index="1">
+                            <div class="slide-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1601443697969-9a49372049d0?q=80&w=1964&auto=format&fit=crop" alt="Luvas de Proteção">
+                            </div>
+                            <div class="slide-text-wrapper">
+                                <h4 class="slide-title">Luvas de Proteção</h4>
+                                <div class="slide-actions">
+                                     <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                        <span>Consultar C.A.</span>
+                                        <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                    </a>
+                                    <button class="btn btn-primary add-to-cart-btn" data-product-id="20" data-product-name="Luvas de Proteção" data-product-image="https://images.unsplash.com/photo-1601443697969-9a49372049d0?q=80&w=1964&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Slide 3 -->
+                        <div class="carousel-slide" data-index="2">
+                            <div class="slide-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1634551351185-1d6a6d074558?q=80&w=1974&auto=format&fit=crop" alt="Botas de Segurança">
+                            </div>
+                            <div class="slide-text-wrapper">
+                                <h4 class="slide-title">Botas de Segurança</h4>
+                                <div class="slide-actions">
+                                     <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                        <span>Consultar C.A.</span>
+                                        <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                    </a>
+                                    <button class="btn btn-primary add-to-cart-btn" data-product-id="21" data-product-name="Botas de Segurança" data-product-image="https://images.unsplash.com/photo-1634551351185-1d6a6d074558?q=80&w=1974&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                                </div>
+                            </div>
+                        </div>
+                         <!-- Slide 4 -->
+                        <div class="carousel-slide" data-index="3">
+                            <div class="slide-image-wrapper">
+                                <img src="https://images.unsplash.com/photo-1614728263944-12a1c028a1c7?q=80&w=1974&auto=format&fit=crop" alt="Óculos de Proteção">
+                            </div>
+                            <div class="slide-text-wrapper">
+                                <h4 class="slide-title">Óculos de Proteção</h4>
+                                <div class="slide-actions">
+                                     <a href="https://caepi.mte.gov.br/" target="_blank" rel="noopener noreferrer" class="btn btn-neutral ca-button" data-tooltip="C.A. significa 'Certificado de Aprovação'. É uma garantia do Ministério do Trabalho de que o equipamento de proteção foi testado e aprovado.">
+                                        <span>Consultar C.A.</span>
+                                        <svg class="icon-info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                                    </a>
+                                    <button class="btn btn-primary add-to-cart-btn" data-product-id="22" data-product-name="Óculos de Proteção" data-product-image="https://images.unsplash.com/photo-1614728263944-12a1c028a1c7?q=80&w=1974&auto=format&fit=crop">Adicionar ao Orçamento</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="perspective-carousel-nav prev" aria-label="Anterior">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    </button>
+                    <button class="perspective-carousel-nav next" aria-label="Próximo">
+                        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!--           INTERACTIVE PRODUCT SECTION         -->
+        <!-- ============================================= -->
+        <section id="interactive-product" class="feature-section alt-bg section-padding">
+            <div class="container">
+                <h2 class="section-title text-center scroll-animate">Produto <span class="highlight">em Destaque</span></h2>
+                <div class="product-interactive-grid scroll-animate">
+                    <!-- Coluna do Carrossel -->
+                    <div class="product-carousel-wrapper">
+                        <div class="product-carousel">
+                            <div class="product-carousel-track">
+                                <div class="product-carousel-slide">
+                                    <img src="https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1964&auto=format&fit=crop" alt="Camisa Premium na cor Azul">
+                                </div>
+                                <div class="product-carousel-slide">
+                                    <img src="https://images.unsplash.com/photo-1622470953794-3ed961c3765e?q=80&w=1964&auto=format&fit=crop" alt="Camisa Premium na cor Cinza">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-nav-button prev" id="carousel-prev-btn" aria-label="Imagem Anterior">
+                             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <button class="carousel-nav-button next" id="carousel-next-btn" aria-label="Próxima Imagem">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                        <div class="color-swatches">
+                            <button class="color-swatch" data-slide-index="0" aria-label="Selecionar cor Azul">
+                                <div class="color-swatch-inner" style="background-color: #00529B;"></div>
+                            </button>
+                            <button class="color-swatch" data-slide-index="1" aria-label="Selecionar cor Cinza">
+                                <div class="color-swatch-inner" style="background-color: #4b5563;"></div>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- Coluna de Detalhes -->
+                    <div class="product-interactive-details">
+                        <h3>Camisa Premium</h3>
+                        <p>Feita com algodão pima de alta qualidade, esta camisa oferece conforto e estilo incomparáveis. Perfeita para qualquer ocasião, do casual ao formal. Escolha sua cor favorita.</p>
+                        <button id="interactive-add-to-cart-btn" class="btn btn-primary add-to-cart-btn" data-product-id="17">Adicionar ao Orçamento</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!--        INTERACTIVE PRODUCT SECTION 2 (NEW)    -->
+        <!-- ============================================= -->
+        <section id="interactive-product-2" class="feature-section section-padding">
+            <div class="container">
+                <h2 class="section-title text-center scroll-animate">Outro Destaque <span class="highlight">Imperdível</span></h2>
+                <div class="product-interactive-grid scroll-animate">
+                    <!-- Coluna de Detalhes - INVERTED -->
+                    <div class="product-interactive-details">
+                        <h3>Jaqueta Corta-Vento</h3>
+                        <p>Proteção e estilo para qualquer clima. Leve, resistente à água e com design moderno. Ideal para o dia a dia e atividades ao ar livre.</p>
+                        <button id="interactive-add-to-cart-btn-2" class="btn btn-primary add-to-cart-btn" data-product-id="18">Adicionar ao Orçamento</button>
+                    </div>
+                    <!-- Coluna do Carrossel - INVERTED -->
+                    <div class="product-carousel-wrapper">
+                        <div class="product-carousel">
+                            <div class="product-carousel-track">
+                                <div class="product-carousel-slide">
+                                    <img src="https://images.unsplash.com/photo-1591047139829-d916b5099c75?q=80&w=1974&auto=format&fit=crop" alt="Jaqueta Corta-Vento na cor Preta">
+                                </div>
+                                <div class="product-carousel-slide">
+                                    <img src="https://images.unsplash.com/photo-1622419326359-5f403fd88554?q=80&w=1964&auto=format&fit=crop" alt="Jaqueta Corta-Vento na cor Verde">
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-nav-button prev" id="carousel-prev-btn-2" aria-label="Imagem Anterior">
+                             <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        </button>
+                        <button class="carousel-nav-button next" id="carousel-next-btn-2" aria-label="Próxima Imagem">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        </button>
+                        <div class="color-swatches">
+                            <button class="color-swatch" data-slide-index="0" aria-label="Selecionar cor Preta">
+                                <div class="color-swatch-inner" style="background-color: #1f2937;"></div>
+                            </button>
+                            <button class="color-swatch" data-slide-index="1" aria-label="Selecionar cor Verde">
+                                <div class="color-swatch-inner" style="background-color: #166534;"></div>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!--                TESTIMONIALS SECTION           -->
+        <!-- ============================================= -->
+        <section id="testimonials" class="feature-section section-padding">
+            <div class="container">
+                <h2 class="section-title text-center scroll-animate">O Que Nossos <span class="highlight">Clientes Dizem</span></h2>
+                <p class="text-center scroll-animate" style="max-width: 800px; margin: -2rem auto 4rem; color: var(--color-text-secondary);">
+                    A confiança dos nossos clientes é o nosso maior ativo. Veja como nossas soluções transformaram seus negócios.
+                </p>
+                <div class="testimonials-grid">
+                    <!-- Testimonial Card 1 -->
+                    <div class="testimonial-card scroll-animate">
+                        <svg class="quote-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                        <p class="testimonial-text">"A plataforma de e-commerce que eles desenvolveram superou todas as nossas expectativas. As vendas aumentaram 40% no primeiro trimestre!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026704d" alt="Foto de Maria Silva" class="author-image">
+                            <div class="author-info">
+                                <span class="author-name">Maria Silva</span>
+                                <span class="author-title">CEO, Loja da Maria</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial Card 2 -->
+                    <div class="testimonial-card scroll-animate">
+                        <svg class="quote-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                        <p class="testimonial-text">"O sistema de gestão interna otimizou nossos processos de uma forma que não achávamos ser possível. Economizamos centenas de horas de trabalho manual."</p>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026705d" alt="Foto de João Pereira" class="author-image">
+                            <div class="author-info">
+                                <span class="author-name">João Pereira</span>
+                                <span class="author-title">Diretor de Operações, Indústria Forte</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Testimonial Card 3 -->
+                    <div class="testimonial-card scroll-animate">
+                         <svg class="quote-icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                        <p class="testimonial-text">"A equipe não apenas entregou um produto de alta qualidade, mas também ofereceu um suporte incrível durante todo o projeto. Recomendo fortemente!"</p>
+                        <div class="testimonial-author">
+                            <img src="https://i.pravatar.cc/150?u=a042581f4e29026706d" alt="Foto de Ana Costa" class="author-image">
+                            <div class="author-info">
+                                <span class="author-name">Ana Costa</span>
+                                <span class="author-title">Gerente de TI, Tech Solutions</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================= -->
+        <!--                  LOGO CAROUSEL                -->
+        <!-- ============================================= -->
+        <section class="logo-carousel-section">
+            <div class="container">
+                <h3 class="text-center scroll-animate" style="color: var(--color-text-secondary); font-weight: 500; margin-bottom: 2rem;">Tecnologias e parceiros que confiam em nosso trabalho</h3>
+                <div class="logo-carousel scroll-animate">
+                    <div class="logo-carousel-track">
+                        <!-- Logos (Set 1) -->
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=React" alt="Logo da React"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=Node.js" alt="Logo da Node.js"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=AWS" alt="Logo da AWS"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=Next.js" alt="Logo da Next.js"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=Figma" alt="Logo da Figma"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=Stripe" alt="Logo da Stripe"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=Vercel" alt="Logo da Vercel"></div>
+                        
+                        <!-- Logos (Set 2 for infinite loop) -->
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=React" alt="Logo da React"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=Node.js" alt="Logo da Node.js"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=AWS" alt="Logo da AWS"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=Next.js" alt="Logo da Next.js"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=Figma" alt="Logo da Figma"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=Stripe" alt="Logo da Stripe"></div>
+                        <div class="logo-slide"><img src="https://placehold.co/150x50/e2e8f0/475569?text=Vercel" alt="Logo da Vercel"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    
+    <!-- ============================================= -->
+    <!--                SEARCH OVERLAY                 -->
+    <!-- ============================================= -->
+    <div id="search-overlay" class="search-overlay" role="dialog" aria-modal="true" aria-labelledby="search-heading">
+        <div class="search-modal">
+            <div class="search-header">
+                <h3 id="search-heading" class="sr-only">Pesquisa Rápida</h3>
+                <div class="search-input-wrapper">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                    </svg>
+                    <input type="search" id="search-input" placeholder="O que você procura? (ex: Luvas, Intranet)" autocomplete="off">
+                </div>
+                <button id="search-close-button" class="search-close-button" aria-label="Fechar pesquisa">
+                    <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            <div class="search-results-wrapper">
+                <ul id="search-results-list">
+                    <!-- Results will be populated here -->
+                </ul>
+                <p id="search-no-results" class="search-no-results" style="display: none;">Nenhum resultado encontrado.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================= -->
+    <!--          DRAWER OVERLAY (SHARED)              -->
+    <!-- ============================================= -->
+    <div id="drawer-overlay" class="drawer-overlay"></div>
+
+    <!-- ============================================= -->
+    <!--                 BUDGET DRAWER                 -->
+    <!-- ============================================= -->
+    <aside id="cart-drawer" class="drawer" aria-labelledby="cart-heading">
+        <div class="drawer-header">
+            <h3 id="cart-heading">Meu Orçamento</h3>
+            <button id="cart-close-button" class="drawer-close-button" aria-label="Fechar orçamento">
+                <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <div class="drawer-body">
+            <ul id="cart-items" class="cart-items">
+                <!-- Itens do orçamento serão inseridos aqui via JS -->
+            </ul>
+             <div class="budget-observations">
+                <label for="budget-observations-textarea" style="font-weight: 600; font-size: 0.875rem; margin-bottom: 0.5rem; display: block;">Observações:</label>
+                <textarea id="budget-observations-textarea" placeholder="Ex: Preciso de customizações, etc."></textarea>
+            </div>
+            <div id="cart-empty-message" class="cart-empty-message" style="display: none;">
+                <p>Seu orçamento está vazio.</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div id="guest-info-form">
+                <p style="font-size: 0.9rem; color: var(--color-text-secondary); margin-bottom: 1rem;">Preencha seus dados para enviar o orçamento.</p>
+                <div class="form-group">
+                    <label for="guest-name">Nome</label>
+                    <input type="text" id="guest-name" name="guest-name" required>
+                    <div id="guest-name-error" class="form-error-message"></div>
+                </div>
+                 <div class="form-group">
+                    <label for="guest-email">Email</label>
+                    <input type="email" id="guest-email" name="guest-email" required>
+                    <div id="guest-email-error" class="form-error-message"></div>
+                </div>
+                <div class="form-group">
+                    <label for="guest-phone">Telefone (com DDD)</label>
+                    <input type="tel" id="guest-phone" name="guest-phone" required>
+                     <div id="guest-phone-error" class="form-error-message"></div>
+                </div>
+            </div>
+            <button class="btn btn-primary cart-checkout-button">Enviar Orçamento via WhatsApp</button>
+        </div>
+    </aside>
+
+    <!-- ============================================= -->
+    <!--                     FOOTER                    -->
+    <!-- ============================================= -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Coluna 1: Sobre -->
+                <div class="footer-column">
+                    <a href="#home" class="logo gradient-text">TEKNOLUVAS</a>
+                    <p>Criando experiências digitais inovadoras para impulsionar o seu negócio.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Instagram"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Instagram</title><path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126s1.338.935 2.126 1.384c.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.717 2.126-1.384s.935-1.338 1.384-2.126c.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.148-.558-2.913-.306-.789-.717-1.459-1.384-2.126S20.65.935 21.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.056 1.17-.249 1.805-.413 2.227-.217.562-.477.96-.896 1.382-.42.419-.82.679-1.38.896-.423.164-1.057.36-2.227.413-1.266.057-1.646.07-4.85.07s-3.585-.015-4.85-.074c-1.17-.056-1.805-.249-2.227-.413-.562-.217-.96-.477-1.382-.896-.419-.42-.679-.82-1.381-.896-.164-.423-.36-1.057-.413-2.227-.057-1.266-.07-1.646-.07-4.85s.015-3.585.074-4.85c.056-1.17.249-1.805.413-2.227.217-.562.477.96.896-1.382.42-.419.819-.679.896-1.381.423-.164 1.057.36 2.227-.413C8.415 2.176 8.797 2.16 12 2.16zm0 5.48c-2.336 0-4.238 1.902-4.238 4.238s1.902 4.238 4.238 4.238 4.238-1.902 4.238-4.238S14.336 7.64 12 7.64zm0 6.69c-1.365 0-2.468-1.103-2.468-2.468s1.103-2.468 2.468-2.468 2.468 1.103 2.468 2.468-1.103 2.468-2.468 2.468zm4.852-6.52c-.732 0-1.325.593-1.325 1.325s.593 1.325 1.325 1.325 1.325-.593 1.325-1.325-.593-1.325-1.325-1.325z"/></svg></a>
+                        <a href="#" aria-label="Facebook"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Facebook</title><path d="M22.675 0h-21.35C.582 0 0 .582 0 1.325v21.351C0 23.418.582 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.742 0 1.325-.582 1.325-1.325V1.325C24 .582 23.418 0 22.675 0z"/></svg></a>
+                        <a href="#" aria-label="WhatsApp"><svg class="icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>WhatsApp</title><path d="M12.061 0C5.425 0 0 5.373 0 12.001c0 2.101.543 4.103 1.58 5.894L.025 24l6.238-1.652a11.956 11.956 0 0 0 5.798 1.502h.002c6.637 0 12.001-5.373 12.001-12.001C24.063 5.373 18.698 0 12.061 0zm0 21.819c-1.895 0-3.695-.53-5.228-1.488l-.376-.223-3.878 1.028 1.045-3.784-.244-.395a9.883 9.883 0 0 1-1.58-5.155c0-5.463 4.465-9.894 9.961-9.894 5.496 0 9.961 4.43 9.961 9.894s-4.465 9.894-9.961 9.894zm5.224-6.878c-.282-.142-1.662-.82-1.92-.914-.258-.094-.446-.142-.633.142-.188.283-.726.914-.89 1.1-.164.185-.328.209-.61.067-.282-.142-1.192-.44-2.27-1.399- .839-.745-1.405-1.662-1.57-1.944-.164-.283-.018-.433.125-.575.129-.129.283-.328.425-.492.143-.164.188-.283.282-.47.094-.188.047-.352-.023-.493-.07-.143-.633-1.523-.868-2.086-.226-.544-.453-.469-.633-.478-.17-.01-.357-.01-.544-.01-.188 0-.493.07-.749.352-.259.283-1.003.98-1.003 2.383s1.026 2.768 1.17 2.953c.142.188 2.015 3.078 4.887 4.314 2.873 1.236 2.873.824 3.397.796.524-.027 1.662-.679 1.897-1.336.236-.656.236-1.218.164-1.336-.072-.12-.259-.186-.541-.328z"/></svg></a>
+                    </div>
+                </div>
+                <!-- Coluna 2: Contato Rápido -->
+                <div class="footer-column">
+                    <h4>Contato Rápido</h4>
+                     <ul class="footer-links">
+                        <li><a href="mailto:contato@teknoluvas.com">contato@teknoluvas.com</a></li>
+                        <li><a href="tel:+5511999998888">+55 (11) 99999-8888</a></li>
+                    </ul>
+                </div>
+                <!-- Coluna 3: Newsletter -->
+                <div class="footer-column">
+                    <h4>Fique por Dentro</h4>
+                    <p>Inscreva-se para receber novidades sobre tecnologia e nossas soluções.</p>
+                    <form class="newsletter-form">
+                        <label for="newsletter-email" class="sr-only">Seu e-mail</label>
+                        <input type="email" id="newsletter-email" placeholder="Seu e-mail">
+                        <button type="submit">Inscrever</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TEKNOLUVAS. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div id="toast-notification" class="toast-notification" role="alert" aria-live="assertive">
+        <svg class="toast-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <p id="toast-message" class="toast-message"></p>
+    </div>
+
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- Mobile Menu Logic ---
+            const menuButton = document.getElementById('menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const openIcon = document.getElementById('menu-open-icon');
+            const closeIcon = document.getElementById('menu-close-icon');
+
+            if (menuButton && mobileMenu && openIcon && closeIcon) {
+                menuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('active');
+                    const isActive = mobileMenu.classList.contains('active');
+                    openIcon.style.display = isActive ? 'none' : 'block';
+                    closeIcon.style.display = isActive ? 'block' : 'none';
+                    menuButton.setAttribute('aria-expanded', String(isActive));
+                });
+
+                mobileMenu.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        mobileMenu.classList.remove('active');
+                        openIcon.style.display = 'block';
+                        closeIcon.style.display = 'none';
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
+            }
+
+            // --- Shared Drawer Logic ---
+            const drawerOverlay = document.getElementById('drawer-overlay');
+            const cartDrawer = document.getElementById('cart-drawer');
+            let elementToFocusOnClose; // For A11y
+
+            if(drawerOverlay) {
+                drawerOverlay.addEventListener('click', () => {
+                    if (cartDrawer.classList.contains('active')) toggleCart();
+                });
+            }
+
+            // --- Budget (Shopping Cart) Logic ---
+            const cartButton = document.getElementById('cart-button');
+            const cartCloseButton = document.getElementById('cart-close-button');
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartBadge = document.getElementById('cart-badge');
+            const cartEmptyMessage = document.getElementById('cart-empty-message');
+            const checkoutButton = document.querySelector('.cart-checkout-button');
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            const saveCart = () => {
+                localStorage.setItem('cart', JSON.stringify(cart));
+            };
+            
+            const trapFocus = (e, modalElement) => {
+                if (e.key !== 'Tab') return;
+
+                const focusableElements = Array.from(modalElement.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+                if (focusableElements.length === 0) return;
+                const firstFocusableElement = focusableElements[0];
+                const lastFocusableElement = focusableElements[focusableElements.length - 1];
+                
+                if (e.shiftKey) { // Shift + Tab
+                    if (document.activeElement === firstFocusableElement) {
+                        lastFocusableElement.focus();
+                        e.preventDefault();
+                    }
+                } else { // Tab
+                    if (document.activeElement === lastFocusableElement) {
+                        firstFocusableElement.focus();
+                        e.preventDefault();
+                    }
+                }
+            };
+
+            const toggleCart = () => {
+                const isActive = cartDrawer.classList.contains('active');
+                
+                cartDrawer.classList.toggle('active');
+                drawerOverlay.classList.toggle('active');
+                document.body.style.overflow = !isActive ? 'hidden' : '';
+
+                if (!isActive) { // Drawer is opening
+                    elementToFocusOnClose = document.activeElement;
+                    
+                    setTimeout(() => {
+                        const firstFocusable = cartDrawer.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                        if (firstFocusable) firstFocusable.focus();
+                    }, 100);
+
+                    cartDrawer.addEventListener('keydown', (e) => trapFocus(e, cartDrawer));
+
+                } else { // Drawer is closing
+                    cartDrawer.removeEventListener('keydown', (e) => trapFocus(e, cartDrawer));
+                    if (elementToFocusOnClose) {
+                        elementToFocusOnClose.focus();
+                    }
+                }
+            };
+
+            const renderCart = () => {
+                cartItemsContainer.innerHTML = '';
+                cartEmptyMessage.style.display = cart.length === 0 ? 'block' : 'none';
+                
+                if (cart.length > 0) {
+                    cart.forEach(item => {
+                        const li = document.createElement('li');
+                        li.classList.add('cart-item');
+                        li.dataset.productId = item.id;
+                        li.innerHTML = `
+                            <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                            <div class="cart-item-details">
+                                <h4>${item.name}</h4>
+                                <div class="cart-item-quantity">
+                                    <button class="quantity-btn decrease-quantity-btn" aria-label="Diminuir quantidade">-</button>
+                                    <span>${item.quantity}</span>
+                                    <button class="quantity-btn increase-quantity-btn" aria-label="Aumentar quantidade">+</button>
+                                </div>
+                            </div>`;
+                        cartItemsContainer.appendChild(li);
+                    });
+                }
+                updateCartBadge();
+                saveCart();
+            };
+            
+            const updateCartBadge = () => {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartBadge.textContent = String(totalItems);
+                cartBadge.classList.toggle('visible', totalItems > 0);
+            };
+
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const clickedButton = e.currentTarget;
+                    const { productId, productName, productImage } = clickedButton.dataset;
+                    
+                    if (!productId || !productName || !productImage) return;
+                    if (clickedButton.disabled) return;
+
+                    // --- Fly-to-Cart Animation Logic ---
+                    let productImageElement = clickedButton.closest('.product-card')?.querySelector('img');
+                    if (!productImageElement) {
+                        // For interactive product sections
+                        productImageElement = clickedButton.closest('.product-interactive-grid')?.querySelector('.product-carousel-slide img');
+                    }
+                    if (!productImageElement) {
+                        // For perspective carousel
+                        productImageElement = clickedButton.closest('.carousel-slide.slide-active')?.querySelector('img');
+                    }
+
+
+                    if (productImageElement) {
+                        const startRect = productImageElement.getBoundingClientRect();
+                        const endRect = cartButton.getBoundingClientRect();
+
+                        const imgClone = new Image();
+                        imgClone.src = productImageElement.src;
+                        imgClone.classList.add('fly-to-cart-clone');
+                        
+                        Object.assign(imgClone.style, {
+                            left: `${startRect.left}px`,
+                            top: `${startRect.top}px`,
+                            width: `${startRect.width}px`,
+                            height: `${startRect.height}px`
+                        });
+                        
+                        document.body.appendChild(imgClone);
+
+                        requestAnimationFrame(() => {
+                            Object.assign(imgClone.style, {
+                                left: `${endRect.left + endRect.width / 2 - 10}px`,
+                                top: `${endRect.top + endRect.height / 2 - 10}px`,
+                                width: '20px',
+                                height: '20px',
+                                opacity: '0'
+                            });
+                        });
+                        
+                        imgClone.addEventListener('transitionend', () => {
+                            imgClone.remove();
+                            cartButton.classList.add('cart-shake');
+                            setTimeout(() => cartButton.classList.remove('cart-shake'), 700);
+                        });
+                    }
+                    // --- End of Animation Logic ---
+
+                    const originalContent = clickedButton.innerHTML;
+                    clickedButton.disabled = true;
+                    
+                    clickedButton.innerHTML = `
+                        <span style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; line-height: 1;">
+                            Adicionado
+                            <svg style="width: 1.1rem; height: 1.1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                        </span>`;
+
+                    const existingItem = cart.find(item => item.id === productId && item.name === productName);
+                    if (existingItem) {
+                        existingItem.quantity++;
+                    } else {
+                        cart.push({ id: productId, name: productName, image: productImage, quantity: 1 });
+                    }
+                    
+                    renderCart();
+                    
+                    setTimeout(() => {
+                        clickedButton.innerHTML = originalContent;
+                        clickedButton.disabled = false;
+                    }, 800);
+                });
+            });
+            
+            cartItemsContainer?.addEventListener('click', (e) => {
+                const cartItemElement = e.target.closest('.cart-item');
+                if (!cartItemElement) return;
+
+                const productId = cartItemElement.dataset.productId;
+                const itemInCart = cart.find(item => item.id === productId);
+                if (!itemInCart) return;
+
+                if (e.target.classList.contains('increase-quantity-btn')) {
+                    itemInCart.quantity++;
+                } else if (e.target.classList.contains('decrease-quantity-btn')) {
+                    itemInCart.quantity--;
+                }
+                
+                if (itemInCart.quantity <= 0) cart = cart.filter(item => item.id !== productId);
+                
+                renderCart();
+            });
+
+            cartButton?.addEventListener('click', toggleCart);
+            cartCloseButton?.addEventListener('click', toggleCart);
+            renderCart();
+
+            // --- Perspective Carousel Logic ---
+            const perspectiveCarouselSection = document.getElementById('new-carousel');
+            if(perspectiveCarouselSection) {
+                const slides = perspectiveCarouselSection.querySelectorAll('.carousel-slide');
+                const prevBtn = perspectiveCarouselSection.querySelector('.perspective-carousel-nav.prev');
+                const nextBtn = perspectiveCarouselSection.querySelector('.perspective-carousel-nav.next');
+                let currentIndex = 0;
+                const slideCount = slides.length;
+
+                const updateCarousel = () => {
+                    slides.forEach((slide, index) => {
+                        slide.classList.remove('slide-active', 'slide-prev', 'slide-next', 'slide-hidden');
+                        
+                        if(index === currentIndex) {
+                            slide.classList.add('slide-active');
+                        } else if(index === (currentIndex - 1 + slideCount) % slideCount) {
+                            slide.classList.add('slide-prev');
+                        } else if(index === (currentIndex + 1) % slideCount) {
+                            slide.classList.add('slide-next');
+                        } else {
+                             slide.classList.add('slide-hidden');
+                        }
+                    });
+                };
+                
+                prevBtn.addEventListener('click', () => {
+                    currentIndex = (currentIndex - 1 + slideCount) % slideCount;
+                    updateCarousel();
+                });
+
+                nextBtn.addEventListener('click', () => {
+                    currentIndex = (currentIndex + 1) % slideCount;
+                    updateCarousel();
+                });
+                
+                slides.forEach(slide => {
+                    slide.addEventListener('click', () => {
+                       const slideIndex = parseInt(slide.dataset.index, 10);
+                       if(slideIndex !== currentIndex) {
+                           currentIndex = slideIndex;
+                           updateCarousel();
+                       }
+                    });
+                });
+
+                updateCarousel();
+            }
+
+            // --- Interactive Product Carousel Logic ---
+            const interactiveProductSection = document.getElementById('interactive-product');
+            if (interactiveProductSection) {
+                const track = interactiveProductSection.querySelector('.product-carousel-track');
+                const slides = Array.from(track.children);
+                const nextButton = interactiveProductSection.querySelector('#carousel-next-btn');
+                const prevButton = interactiveProductSection.querySelector('#carousel-prev-btn');
+                const colorSwatches = interactiveProductSection.querySelectorAll('.color-swatch');
+                const addToCartBtn = interactiveProductSection.querySelector('#interactive-add-to-cart-btn');
+
+                const productVariations = [
+                    { id: '17-blue', name: 'Camisa Premium - Azul', image: 'https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=1964&auto=format&fit=crop' },
+                    { id: '17-gray', name: 'Camisa Premium - Cinza', image: 'https://images.unsplash.com/photo-1622470953794-3ed961c3765e?q=80&w=1964&auto=format&fit=crop' }
+                ];
+
+                let currentSlideIndex = 0;
+
+                const updateCarousel = (targetIndex) => {
+                    currentSlideIndex = targetIndex;
+                    
+                    // Move slide
+                    track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+
+                    // Update swatches
+                    colorSwatches.forEach((swatch, index) => {
+                        swatch.classList.toggle('active', index === currentSlideIndex);
+                    });
+
+                    // Update Add to Cart button data
+                    const currentVariation = productVariations[currentSlideIndex];
+                    addToCartBtn.dataset.productId = currentVariation.id;
+                    addToCartBtn.dataset.productName = currentVariation.name;
+                    addToCartBtn.dataset.productImage = currentVariation.image;
+                };
+                
+                nextButton.addEventListener('click', () => {
+                    const newIndex = (currentSlideIndex + 1) % slides.length;
+                    updateCarousel(newIndex);
+                });
+
+                prevButton.addEventListener('click', () => {
+                    const newIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+                    updateCarousel(newIndex);
+                });
+                
+                colorSwatches.forEach(swatch => {
+                    swatch.addEventListener('click', () => {
+                        const targetIndex = parseInt(swatch.dataset.slideIndex, 10);
+                        updateCarousel(targetIndex);
+                    });
+                });
+
+                // Initial setup
+                updateCarousel(0);
+            }
+
+            // --- Interactive Product Carousel Logic 2 ---
+            const interactiveProductSection2 = document.getElementById('interactive-product-2');
+            if (interactiveProductSection2) {
+                const track = interactiveProductSection2.querySelector('.product-carousel-track');
+                const slides = Array.from(track.children);
+                const nextButton = interactiveProductSection2.querySelector('#carousel-next-btn-2');
+                const prevButton = interactiveProductSection2.querySelector('#carousel-prev-btn-2');
+                const colorSwatches = interactiveProductSection2.querySelectorAll('.color-swatch');
+                const addToCartBtn = interactiveProductSection2.querySelector('#interactive-add-to-cart-btn-2');
+
+                const productVariations2 = [
+                    { id: '18-black', name: 'Jaqueta Corta-Vento - Preta', image: 'https://images.unsplash.com/photo-1591047139829-d916b5099c75?q=80&w=1974&auto=format&fit=crop' },
+                    { id: '18-green', name: 'Jaqueta Corta-Vento - Verde', image: 'https://images.unsplash.com/photo-1622419326359-5f403fd88554?q=80&w=1964&auto=format&fit=crop' }
+                ];
+
+                let currentSlideIndex = 0;
+
+                const updateCarousel = (targetIndex) => {
+                    currentSlideIndex = targetIndex;
+                    
+                    track.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+
+                    colorSwatches.forEach((swatch, index) => {
+                        swatch.classList.toggle('active', index === currentSlideIndex);
+                    });
+
+                    const currentVariation = productVariations2[currentSlideIndex];
+                    addToCartBtn.dataset.productId = currentVariation.id;
+                    addToCartBtn.dataset.productName = currentVariation.name;
+                    addToCartBtn.dataset.productImage = currentVariation.image;
+                };
+                
+                nextButton.addEventListener('click', () => {
+                    const newIndex = (currentSlideIndex + 1) % slides.length;
+                    updateCarousel(newIndex);
+                });
+
+                prevButton.addEventListener('click', () => {
+                    const newIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+                    updateCarousel(newIndex);
+                });
+                
+                colorSwatches.forEach(swatch => {
+                    swatch.addEventListener('click', () => {
+                        const targetIndex = parseInt(swatch.dataset.slideIndex, 10);
+                        updateCarousel(targetIndex);
+                    });
+                });
+
+                // Initial setup
+                updateCarousel(0);
+            }
+
+            // --- Checkout Form Logic ---
+            const setError = (inputElement, message) => {
+                const formGroup = inputElement.parentElement;
+                const errorDisplay = formGroup.querySelector('.form-error-message');
+                inputElement.classList.add('invalid');
+                if (errorDisplay) errorDisplay.innerText = message;
+            };
+
+            const clearError = (inputElement) => {
+                const formGroup = inputElement.parentElement;
+                const errorDisplay = formGroup.querySelector('.form-error-message');
+                inputElement.classList.remove('invalid');
+                if (errorDisplay) errorDisplay.innerText = '';
+            };
+            
+            const clearGuestErrors = () => {
+                clearError(document.getElementById('guest-name'));
+                clearError(document.getElementById('guest-email'));
+                clearError(document.getElementById('guest-phone'));
+            }
+
+            const showToast = (message) => {
+                const toast = document.getElementById('toast-notification');
+                const toastMessage = document.getElementById('toast-message');
+                if (!toast || !toastMessage) return;
+
+                toastMessage.textContent = message;
+                toast.classList.add('show');
+
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 4000);
+            };
+
+            checkoutButton?.addEventListener('click', async () => {
+                if (cart.length === 0) {
+                    alert('Seu orçamento está vazio!');
+                    return;
+                }
+                clearGuestErrors();
+
+                const whatsappNumber = "5514997201523";
+                
+                const guestNameInput = document.getElementById('guest-name');
+                const guestEmailInput = document.getElementById('guest-email');
+                const guestPhoneInput = document.getElementById('guest-phone');
+                
+                const userName = guestNameInput.value.trim();
+                const userEmail = guestEmailInput.value.trim();
+                const userPhone = guestPhoneInput.value.trim();
+                
+                let isGuestValid = true;
+                if(!userName) {
+                    setError(guestNameInput, 'O nome é obrigatório.');
+                    isGuestValid = false;
+                }
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if(!userEmail || !emailRegex.test(userEmail)) {
+                    setError(guestEmailInput, 'Por favor, insira um e-mail válido.');
+                    isGuestValid = false;
+                }
+                if(!userPhone || userPhone.length < 10) {
+                    setError(guestPhoneInput, 'Telefone inválido (inclua o DDD).');
+                    isGuestValid = false;
+                }
+
+                if (!isGuestValid) return;
+                
+                const productsList = cart.map(item => `- ${item.name} (Qtd: ${item.quantity})`).join('\n');
+                const observations = document.getElementById('budget-observations-textarea').value.trim();
+
+                let message = `Olá! Gostaria de um orçamento para os seguintes itens:\n\n*Produtos:*\n${productsList}\n\n`;
+
+                if(observations) {
+                    message += `*Observações:*\n${observations}\n\n`;
+                }
+
+                message += `*Meus Dados:*\n- Nome: ${userName}\n- Email: ${userEmail}\n- Telefone: ${userPhone}\n\nAguardando o contato. Obrigado!`;
+                
+                const encodedMessage = encodeURIComponent(message);
+                window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+                
+                cart = [];
+                renderCart();
+                toggleCart();
+                showToast("Orçamento preparado! Finalize o envio no WhatsApp.");
+            });
+
+            // --- Search Logic ---
+            const searchToggleButton = document.getElementById('search-toggle-button');
+            const searchOverlay = document.getElementById('search-overlay');
+            const searchCloseButton = document.getElementById('search-close-button');
+            const searchInput = document.getElementById('search-input');
+            const searchResultsList = document.getElementById('search-results-list');
+            const searchNoResults = document.getElementById('search-no-results');
+            let searchableItems = [];
+
+            const toggleSearch = () => {
+                const isActive = searchOverlay.classList.contains('active');
+                searchOverlay.classList.toggle('active');
+                document.body.style.overflow = !isActive ? 'hidden' : '';
+
+                if (!isActive) { // Opening
+                    setTimeout(() => searchInput.focus(), 100);
+                } else { // Closing
+                    searchInput.value = '';
+                    renderSearchResults([]);
+                    searchNoResults.style.display = 'none';
+                }
+            };
+            
+            const renderSearchResults = (results) => {
+                searchResultsList.innerHTML = '';
+                searchNoResults.style.display = (results.length === 0 && searchInput.value) ? 'block' : 'none';
+
+                if (results.length > 0) {
+                    results.forEach(result => {
+                        const li = document.createElement('li');
+                        li.classList.add('search-result-item');
+                        li.innerHTML = `
+                            <a href="#${result.id}">
+                                <div class="title">${result.title}</div>
+                                <div class="context">${result.type}</div>
+                            </a>
+                        `;
+                        searchResultsList.appendChild(li);
+                    });
+                }
+            };
+            
+            const handleSearch = (e) => {
+                const query = e.target.value.toLowerCase().trim();
+
+                if (query.length < 2) {
+                    renderSearchResults([]);
+                    searchNoResults.style.display = 'none';
+                    return;
+                }
+
+                const results = searchableItems.filter(item => item.content.includes(query));
+                renderSearchResults(results);
+            };
+
+            const handleResultClick = (e) => {
+                const targetLink = e.target.closest('a');
+                if (!targetLink) return;
+                
+                e.preventDefault();
+                const targetId = targetLink.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+
+                if (targetElement) {
+                    toggleSearch();
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        targetElement.classList.add('search-highlight');
+                        setTimeout(() => {
+                            targetElement.classList.remove('search-highlight');
+                        }, 2500);
+                    }, 300); // Wait for overlay to close
+                }
+            };
+
+            const collectSearchableItems = () => {
+                searchableItems = [];
+                
+                document.querySelectorAll('.product-card').forEach((card, index) => {
+                    const titleEl = card.querySelector('h3');
+                    const descEl = card.querySelector('p');
+                    const id = card.id || `product-card-${index}`;
+                    card.id = id;
+                    if(titleEl && descEl) {
+                        searchableItems.push({
+                            id: id,
+                            title: titleEl.innerText,
+                            content: `${titleEl.innerText} ${descEl.innerText}`.toLowerCase(),
+                            type: 'Produto'
+                        });
+                    }
+                });
+                
+                document.querySelectorAll('#new-carousel .carousel-slide').forEach(slide => {
+                    const titleEl = slide.querySelector('.slide-title');
+                    const button = slide.querySelector('.add-to-cart-btn');
+                    if (titleEl && button) {
+                        const id = `slide-product-${button.dataset.productId}`;
+                        slide.id = id;
+                        searchableItems.push({
+                            id: id,
+                            title: titleEl.innerText,
+                            content: titleEl.innerText.toLowerCase(),
+                            type: 'Equipamento em Destaque'
+                        });
+                    }
+                });
+
+                document.querySelectorAll('.product-interactive-grid').forEach((section, index) => {
+                    const titleEl = section.querySelector('h3');
+                    const descEl = section.querySelector('p');
+                    const id = section.closest('section').id || `interactive-section-${index+1}`;
+                    section.closest('section').id = id;
+                    if(titleEl && descEl) {
+                        searchableItems.push({
+                            id: id,
+                            title: titleEl.innerText,
+                            content: `${titleEl.innerText} ${descEl.innerText}`.toLowerCase(),
+                            type: 'Produto em Destaque'
+                        });
+                    }
+                });
+
+                document.querySelectorAll('section[id]').forEach(section => {
+                    const titleEl = section.querySelector('.section-title');
+                    if (titleEl && section.id && !searchableItems.some(item => item.id === section.id)) {
+                        searchableItems.push({
+                            id: section.id,
+                            title: titleEl.innerText.replace(/\n/g, ' ').replace(/\s\s+/g, ' '),
+                            content: titleEl.innerText.toLowerCase(),
+                            type: 'Seção'
+                        });
+                    }
+                });
+            };
+            
+            if (searchToggleButton && searchOverlay && searchCloseButton && searchInput) {
+                searchToggleButton.addEventListener('click', toggleSearch);
+                searchCloseButton.addEventListener('click', toggleSearch);
+                searchOverlay.addEventListener('click', (e) => {
+                    if (e.target === searchOverlay) toggleSearch();
+                });
+                searchInput.addEventListener('input', handleSearch);
+                searchResultsList.addEventListener('click', handleResultClick);
+            }
+            
+            collectSearchableItems();
+
+
+            // --- NEW: Product Catalog Filter Logic ---
+            const filtersContainer = document.querySelector('.filters-container');
+            const productCards = document.querySelectorAll('#product-catalog-grid .product-card');
+
+            if (filtersContainer && productCards.length > 0) {
+                filtersContainer.addEventListener('click', (e) => {
+                    const target = e.target;
+                    if (!target.matches('.filter-btn')) return;
+
+                    // Update active button state
+                    filtersContainer.querySelector('.filter-btn.active').classList.remove('active');
+                    target.classList.add('active');
+
+                    const filter = target.dataset.filter;
+
+                    productCards.forEach(card => {
+                        const category = card.dataset.category;
+                        const shouldShow = (filter === 'all' || filter === category);
+                        
+                        // Using timeout to allow opacity transition to be visible
+                        if (shouldShow) {
+                            card.style.display = 'flex';
+                            setTimeout(() => card.classList.remove('hidden'), 10);
+                        } else {
+                            card.classList.add('hidden');
+                             setTimeout(() => card.style.display = 'none', 300); // match transition duration
+                        }
+                    });
+                });
+            }
+
+
+            // --- Global Keydown Listener ---
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    if (cartDrawer.classList.contains('active')) toggleCart();
+                    if (searchOverlay && searchOverlay.classList.contains('active')) toggleSearch();
+                }
+            });
+
+            // --- Scroll Animation Observer ---
+            const animatedElements = document.querySelectorAll('.scroll-animate');
+            if (animatedElements.length > 0) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, {
+                    rootMargin: '0px 0px -50px 0px'
+                });
+
+                animatedElements.forEach(el => {
+                    observer.observe(el);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
